@@ -15,10 +15,10 @@ jobs:
   build-documentation:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/nwchemex-project/build_doc:v1
+      image: ghcr.io/yzhang-23/build_doc:v1
       credentials:
         username: ${{ github.actor }}
-        password: ${{ secrets.CONTAINER_REPO_TOKEN }}
+        password: ${{ secrets.DOCKER_PAT }}
     strategy:
       matrix:
         cmake_version: [3.17.0]
@@ -28,7 +28,7 @@ jobs:
     - name: Build documentation
       env:
         cmake_version: ${{ matrix.cmake_version }}
-      uses: NWChemEx-Project/.github/actions/image-build_docs@master
+      uses: yzhang-23/.github/actions/image-build_docs@master
       with:
         target: ${{inputs.target}}
         skip_doxygen: ${{inputs.skip_doxygen}}
