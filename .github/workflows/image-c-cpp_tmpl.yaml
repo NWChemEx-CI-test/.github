@@ -25,11 +25,10 @@ jobs:
   Build:
     runs-on: ubuntu-latest
     container:
-      # will make the image choosing automatical later. Now it is hardwired
-      image: ghcr.io/nwchemex-project/build_parallelzone:v1
+      image: ghcr.io/yzhang-23/build_${{inputs.repo}}:v1
       credentials:
         username: ${{ github.actor }}
-        password: ${{ secrets.CONTAINER_REPO_TOKEN }}
+        password: ${{ secrets.DOCKER_PAT }}
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-python@v1
@@ -41,7 +40,7 @@ jobs:
           cmake_version: ${{ matrix.cmake_version }}
           clang_version: ${{ matrix.clang_version }}
           ninja_build: ${{ inputs.ninja_build }}
-        uses: NWChemEx-Project/.github/actions/image-build@master
+        uses: yzhang-23/.github/actions/image-build@master
         with: 
           CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
       - name: Build using GCC
@@ -50,10 +49,10 @@ jobs:
           cmake_version: ${{ matrix.cmake_version }}
           gcc_version: ${{ matrix.gcc_version }}
           ninja_build: ${{ inputs.ninja_build }}
-        uses: NWChemEx-Project/.github/actions/image-build@master
+        uses: yzhang-23/.github/actions/image-build@master
         with: 
           CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
       - name: Test Application
-        uses: NWChemEx-Project/.github/actions/image-test@master
+        uses: yzhang-23/.github/actions/image-test@master
         with: 
           CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
