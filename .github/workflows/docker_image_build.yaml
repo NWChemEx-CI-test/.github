@@ -37,12 +37,12 @@ jobs:
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
-        password: ${{ secrets.CONTAINER_REPO_TOKEN }}
+        password: ${{ secrets.DOCKER_PAT }}
     - name: Build the docker image and push
       run: |
         FILE=${{matrix.dfiles}}
         filename=${FILE%%.*}
         filename=${filename##*/} 
         filename=${filename,,}
-        docker build -t ghcr.io/nwchemex-project/build_${filename}:v1 -f ${FILE} .
-        docker push ghcr.io/nwchemex-project/build_${filename}:v1
+        docker build -t ghcr.io/yzhang-23/build_${filename}:v1 -f ${FILE} .
+        docker push ghcr.io/yzhang-23/build_${filename}:v1
