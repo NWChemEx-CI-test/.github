@@ -53,20 +53,20 @@ jobs:
           ninja_build: ${{ inputs.ninja_build }}
         uses: yzhang-23/.github/actions/build@master
         with: 
-          CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+          CMAIZE_GITHUB_TOKEN: ${{ secrets.DOCKER_PAT }}
       - name: Build using GCC
         if: ${{inputs.gcc-build == true}}
         env:
           cmake_version: ${{ matrix.cmake_version }}
           gcc_version: ${{ matrix.gcc_version }}
           ninja_build: ${{ inputs.ninja_build }}
-        uses: NWChemEx-Project/.github/actions/build@master
+        uses: yzhang-23/.github/actions/build@master
         with: 
-          CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+          CMAIZE_GITHUB_TOKEN: ${{ secrets.DOCKER_PAT }}
       - name: Test Application
         uses: yzhang-23/.github/actions/test@master
         with: 
-          CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+          CMAIZE_GITHUB_TOKEN: ${{ secrets.DOCKER_PAT }}
       # - uses: codecov/codecov-action@v1
       #   with:
       #     token: ${{ secrets.CODECOV_TOKEN }}
