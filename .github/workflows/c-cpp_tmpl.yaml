@@ -53,7 +53,7 @@ jobs:
           ninja_build: ${{ inputs.ninja_build }}
         uses: yzhang-23/.github/actions/build@master
         with: 
-          CMAIZE_GITHUB_TOKEN: ${{ secrets.DOCKER_PAT }}
+          CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
       - name: Build using GCC
         if: ${{inputs.gcc-build == true}}
         env:
@@ -62,11 +62,11 @@ jobs:
           ninja_build: ${{ inputs.ninja_build }}
         uses: yzhang-23/.github/actions/build@master
         with: 
-          CMAIZE_GITHUB_TOKEN: ${{ secrets.DOCKER_PAT }}
+          CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
       - name: Test Application
         uses: yzhang-23/.github/actions/test@master
         with: 
-          CMAIZE_GITHUB_TOKEN: ${{ secrets.DOCKER_PAT }}
+          CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
       # - uses: codecov/codecov-action@v1
       #   with:
       #     token: ${{ secrets.CODECOV_TOKEN }}
