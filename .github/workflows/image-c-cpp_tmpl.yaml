@@ -69,9 +69,21 @@ jobs:
         uses: yzhang-23/.github/actions/image-test@master
         with: 
           CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
-      - name: Clean and build the release image
+      - name: Clean the build directory
         run: |
           rm -rf ${{inputs.repo}}
-          rname=${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}
-          docker build -t ghcr.io/yzhang-23/release_${rname}:v1 .
-          docker push ghcr.io/yzhang-23/release_${rname}:v1
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: ghcr.io/yzhang-23/build_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}
+      - name: Build the image and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          #rname=${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}
+          #docker build -t ghcr.io/yzhang-23/release_${rname}:v1 .
+          #docker push ghcr.io/yzhang-23/release_${rname}:v1
