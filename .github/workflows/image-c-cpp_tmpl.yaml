@@ -18,6 +18,8 @@ on:
     secrets:
       CMAIZE_GITHUB_TOKEN:
         required: true
+      DOCKER_PAT:
+        required: true
         #CONTAINER_REPO_TOKEN:
         #required: true
 
