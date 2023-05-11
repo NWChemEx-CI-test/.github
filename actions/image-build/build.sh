@@ -54,12 +54,21 @@ else
 fi
 
 #Step 2: Configure
-
+export INSTALL_PATH=../install
 if [ "${ninja_build}" = true ] ; then
-  ${cmake_command} -GNinja -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}"
+  ${cmake_command} -GNinja -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}" -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH}
 else
-  ${cmake_command} -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}"
+  ${cmake_command} -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}" -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH}
 fi
 
 #Step 3: Compile
 ${cmake_command} --build build
+
+#Step 4: Install
+${cmake_command} --build build --target install
+
+#Step 5: Clean and build the release image
+#cd ..
+#rm -rf ParallelZone
+#docker build -t ghcr.io/yzhang-23/release_${repo}:v1 .
+#docker push ghcr.io/yzhang-23/release_${repo}:v1

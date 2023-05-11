@@ -18,14 +18,25 @@ on:
     secrets:
       CMAIZE_GITHUB_TOKEN:
         required: true
-      CONTAINER_REPO_TOKEN:
-        required: true
+        #CONTAINER_REPO_TOKEN:
+        #required: true
 
 jobs:
+  Repo_name_lowcase:
+    runs-on: ubuntu-latest
+    outputs:
+      lowcase_repo_name: ${{ steps.output-repo-name.outputs.repo_name }}
+    steps:
+    - name: Output repo name in lowcase
+      id: output-repo-name
+      run: |
+        name=${{ inputs.repo }}
+        echo "repo_name=${name,,}" >> "$GITHUB_OUTPUT"
   Build:
     runs-on: ubuntu-latest
+    needs: Repo_name_lowcase
     container:
-      image: ghcr.io/yzhang-23/build_${{inputs.repo}}:v1
+      image: ghcr.io/yzhang-23/build_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:v1
       credentials:
         username: ${{ github.actor }}
         password: ${{ secrets.DOCKER_PAT }}
@@ -56,3 +67,9 @@ jobs:
         uses: yzhang-23/.github/actions/image-test@master
         with: 
           CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+      - name: Clean and build the release image
+        run: |
+          rm -rf ${{inputs.repo}}
+          rname=${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}
+          docker build -t ghcr.io/yzhang-23/release_${rname}:v1 .
+          docker push ghcr.io/yzhang-23/release_${rname}:v1
