@@ -68,6 +68,9 @@ ${cmake_command} --build build
 ${cmake_command} --build build --target install
 
 #Step 5: Clean and build the release image
+ls -lrtd *
+cd ..
+ls -lrtd *
 #cd ..
 #rm -rf ParallelZone
 #docker build -t ghcr.io/yzhang-23/release_${repo}:v1 .
