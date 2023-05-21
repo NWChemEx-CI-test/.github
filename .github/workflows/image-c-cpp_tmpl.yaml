@@ -42,10 +42,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: Repo_name_lowcase
     container:
-      image: ghcr.io/nwchemex-project/build_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:v1
+      image: ghcr.io/yzhang-23/build_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:v1
       credentials:
         username: ${{ github.actor }}
-        password: ${{ secrets.CONTAINER_REPO_TOKEN }}
+        #password: ${{ secrets.CONTAINER_REPO_TOKEN }}
+        password: ${{ secrets.DOCKER_PAT }}
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-python@v1
@@ -57,7 +58,7 @@ jobs:
           cmake_version: ${{ matrix.cmake_version }}
           clang_version: ${{ matrix.clang_version }}
           ninja_build: ${{ inputs.ninja_build }}
-        uses: NWChemEx-Project/.github/actions/image-build@master
+        uses: NWChemEx-CI-test/.github/actions/image-build@master
         with: 
           CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
           INSTALL: ${{ inputs.install }}
@@ -67,13 +68,13 @@ jobs:
           cmake_version: ${{ matrix.cmake_version }}
           gcc_version: ${{ matrix.gcc_version }}
           ninja_build: ${{ inputs.ninja_build }}
-        uses: NWChemEx-Project/.github/actions/image-build@master
+        uses: NWChemEx-CI-test/.github/actions/image-build@master
         with: 
           CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
           INSTALL: ${{ inputs.install }}
       - name: Test Application
         if: ${{inputs.test == true}}
-        uses: NWChemEx-Project/.github/actions/image-test@master
+        uses: NWChemEx-CI-test/.github/actions/image-test@master
         with: 
           CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
       - name: Login to GitHub Container Registry
@@ -82,13 +83,15 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.CONTAINER_REPO_TOKEN }}
+          #password: ${{ secrets.CONTAINER_REPO_TOKEN }}
+          password: ${{ secrets.DOCKER_PAT }}
       - name: Extract metadata (tags, labels) for Docker
         if: ${{inputs.gcc-build == true}}  && ${{inputs.install == true}}
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
-          images: ghcr.io/nwchemex-project/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}
+                #images: ghcr.io/nwchemex-project/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}
+          images: ghcr.io/yzhang-23/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}
       - name: Build the image and push
         if: ${{inputs.gcc-build == true}}  && ${{inputs.install == true}}
         uses: docker/build-push-action@v4
