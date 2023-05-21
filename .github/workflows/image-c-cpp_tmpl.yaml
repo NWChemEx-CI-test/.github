@@ -24,7 +24,8 @@ on:
     secrets:
       CMAIZE_GITHUB_TOKEN:
         required: true
-      CONTAINER_REPO_TOKEN:
+        #CONTAINER_REPO_TOKEN:
+      DOCKER_PAT:
         required: true
 
 jobs:
