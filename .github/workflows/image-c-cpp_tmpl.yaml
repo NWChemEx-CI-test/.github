@@ -86,18 +86,23 @@ jobs:
           username: ${{ github.actor }}
           #password: ${{ secrets.CONTAINER_REPO_TOKEN }}
           password: ${{ secrets.DOCKER_PAT }}
-      - name: Extract metadata (tags, labels) for Docker
-        if: ${{inputs.gcc-build == true && inputs.install == true}}
-        id: meta
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
-        with:
-                #images: ghcr.io/nwchemex-project/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}
-          images: ghcr.io/yzhang-23/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}
       - name: Build the image and push
         if: ${{inputs.gcc-build == true && inputs.install == true}}
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+        run: |
+          docker build -t ghcr.io/yzhang-23/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:v1 -f release.Dockerfile .
+          docker push ghcr.io/yzhang-23/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:v1
+          #- name: Extract metadata (tags, labels) for Docker
+          #  if: ${{inputs.gcc-build == true && inputs.install == true}}
+          #  id: meta
+          #  uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+          #  with:
+          #          #images: ghcr.io/nwchemex-project/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}
+          #    images: ghcr.io/yzhang-23/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}
+          #- name: Build the image and push
+          #  if: ${{inputs.gcc-build == true && inputs.install == true}}
+          #  uses: docker/build-push-action@v4
+          #  with:
+          #    context: .
+          #    push: true
+          #    tags: ${{ steps.meta.outputs.tags }}
+          #    labels: ${{ steps.meta.outputs.labels }}

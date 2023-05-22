@@ -32,6 +32,7 @@ RUN    apt-get update \
 		python3-dev \
 		openmpi-bin \
 		libopenmpi-dev \
+                docker.io \
 	&& apt-get clean \
 	&& pip install gcovr \
 	&& pip install cppyy \
