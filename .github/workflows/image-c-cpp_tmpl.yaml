@@ -89,7 +89,7 @@ jobs:
       - name: Build the image and push
         if: ${{inputs.gcc-build == true && inputs.install == true}}
         run: |
-          docker build -t ghcr.io/yzhang-23/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:v1 -f release.Dockerfile ../
+          docker build -t ghcr.io/yzhang-23/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:v1 -f release.Dockerfile .
           docker push ghcr.io/yzhang-23/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:v1
           #- name: Extract metadata (tags, labels) for Docker
           #  if: ${{inputs.gcc-build == true && inputs.install == true}}
