@@ -17,7 +17,13 @@ export OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
 
 #Step 4: Unit-test
 cd build
-${ctest_command} -VV
+if [[ ${integration_test} == true ]]; then
+  echo "Running integration tests..."
+  ${ctest_command} -VV -R integration*
+else
+  echo "Running unit tests..."
+  ${ctest_command} -VV -R unit*
+fi
 cd ..
 
 #Step 5: Generate coverage report
