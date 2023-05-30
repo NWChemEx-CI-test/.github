@@ -15,5 +15,5 @@ runs:
       env:
         CMAIZE_GITHUB_TOKEN: ${{inputs.CMAIZE_GITHUB_TOKEN}}
         int_test: ${{ inputs.integration_test }}
-      run: ${GITHUB_ACTION_PATH}/test.sh
+      run: bash ${GITHUB_ACTION_PATH}/test.sh
       shell: bash 
