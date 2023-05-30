@@ -17,7 +17,7 @@ export OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1
 
 #Step 4: Unit-test
 cd build
-if [[ ${integration_test} == true ]]; then
+if [[ "${integration_test}" == "true" ]]; then
   echo "Running integration tests..."
   ${ctest_command} -VV -R test_integration*
 else
