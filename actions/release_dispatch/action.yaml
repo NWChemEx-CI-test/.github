@@ -17,5 +17,5 @@ runs:
           -H 'Accept: application/vnd.github.everest-preview+json' \
           -u ${DOCKER_PAT} \
           #--data '{"event_type": "${low_name}_release_update", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'"  }}'
-          --data '{"event_type": "utilities_release_update"}
+          --data '{"event_type": "utilities_release_update"}'
       shell: bash
