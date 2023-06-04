@@ -15,7 +15,7 @@ runs:
           low_name=${repo,,}
           curl -X POST https://api.github.com/repos/NWChemEx-CI-test/${repo}/dispatches \
           -H 'Accept: application/vnd.github.everest-preview+json' \
-          -H "Authorization: Bearer ${{ inputs.DOCKER_PAT }}"
+          -H "Authorization: Bearer ${{ inputs.DOCKER_PAT }}" \
           -d '{"event_type": "utilities_release_update"}'
       shell: bash
 
