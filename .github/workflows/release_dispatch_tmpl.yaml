@@ -1,0 +1,22 @@
+# Send a repo dispatch to announce the update of the release image of a repo
+on:
+  workflow_call:
+    inputs:
+      repo_name:
+        type: string
+        required: true
+    secrets:
+      DOCKER_PAT:
+        required: true
+
+jobs:
+  send-dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      run: |
+          repo=${{ inputs.repo_name }}
+          low_name=${repo,,}}
+          curl -X POST https://api.github.com/repos/NWChemEx-CI-test/repo/dispatches \
+          -H 'Accept: application/vnd.github.everest-preview+json' \
+          -u ${{ secrets.DOCKER_PAT }} \
+          --data '{"event_type": "${low_name}_release_update", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'"  }}'
