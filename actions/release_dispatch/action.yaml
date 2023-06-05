@@ -13,18 +13,18 @@ runs:
   steps:
     - name: send a repo dispatch
       run: |
-              #repo=${{ inputs.from_repo }}
-              #low_name=${repo,,}
-              #echo ${{ inputs.to_repo }}
-              #repo=${{ inputs.to_repo }}
-              #echo ${repo}
-        echo "This is a test action!"
-        #curl -X POST https://api.github.com/repos/NWChemEx-CI-test/${repo}/dispatches \
-        #-H 'Accept: application/vnd.github.everest-preview+json' \
-        #-H "Authorization: Bearer ${{ inputs.DOCKER_PAT }}" \
-        #-d '{"event_type": "release_update"}'
+        repo=${{ inputs.to_repo }}
+        curl -X POST https://api.github.com/repos/NWChemEx-CI-test/${repo}/dispatches \
+        -H 'Accept: application/vnd.github.everest-preview+json' \
+        -H "Authorization: Bearer ${{ inputs.DOCKER_PAT }}" \
+        -d '{"event_type": "release_update"}'
       shell: bash
 
 # -d '{"event_type": "${from_repo}_release_update"}'
 # -u "${DOCKER_PAT}" \
 #--data '{"event_type": "${low_name}_release_update", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'"  }}'
+#repo=${{ inputs.from_repo }}
+#low_name=${repo,,}
+#echo ${{ inputs.to_repo }}
+#repo=${{ inputs.to_repo }}
+#echo ${repo}
