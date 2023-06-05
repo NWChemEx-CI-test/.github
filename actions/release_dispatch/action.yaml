@@ -16,7 +16,8 @@ runs:
               #repo=${{ inputs.from_repo }}
               #low_name=${repo,,}
               #echo ${{ inputs.to_repo }}
-          curl -X POST https://api.github.com/repos/NWChemEx-CI-test/${{inputs.to_repo}}/dispatches \
+          repo = ${{ inputs.to_repo }}
+          curl -X POST https://api.github.com/repos/NWChemEx-CI-test/${to_repo}/dispatches \
           -H 'Accept: application/vnd.github.everest-preview+json' \
           -H "Authorization: Bearer ${{ inputs.DOCKER_PAT }}" \
           -d '{"event_type": "release_update"}'
