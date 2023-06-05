@@ -15,6 +15,7 @@ runs:
       run: |
               #repo=${{ inputs.from_repo }}
               #low_name=${repo,,}
+          echo ${to_repo}
           curl -X POST https://api.github.com/repos/NWChemEx-CI-test/${to_repo}/dispatches \
           -H 'Accept: application/vnd.github.everest-preview+json' \
           -H "Authorization: Bearer ${{ inputs.DOCKER_PAT }}" \
