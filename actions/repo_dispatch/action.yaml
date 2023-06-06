@@ -1,9 +1,8 @@
-# Send a repo dispatch to announce the update of the release image of a repo
-name: send release dispatch to target repos
+name: send an update dispatch to target repos
 inputs:
-        #from_repo:
-        # required: true
   to_repo:
+    required: true
+  type:
     required: true
   DOCKER_PAT:
     required: true
@@ -13,11 +12,10 @@ runs:
   steps:
     - name: send a repo dispatch
       run: |
-        repo=${{ inputs.to_repo }}
-        curl -X POST https://api.github.com/repos/NWChemEx-CI-test/${repo}/dispatches \
+        curl -X POST https://api.github.com/repos/NWChemEx-CI-test/${{inputs.to_repo}}/dispatches \
         -H 'Accept: application/vnd.github.everest-preview+json' \
         -H "Authorization: Bearer ${{ inputs.DOCKER_PAT }}" \
-        -d '{"event_type": "release_update"}'
+        -d '{"event_type": ${{ inputs.type }} }'
       shell: bash
 
 # -d '{"event_type": "${from_repo}_release_update"}'
