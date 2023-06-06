@@ -12,6 +12,7 @@ runs:
   steps:
     - name: send a repo dispatch
       run: |
+        echo ${{ inputs.type }}
         curl -X POST https://api.github.com/repos/NWChemEx-CI-test/${{inputs.to_repo}}/dispatches \
         -H 'Accept: application/vnd.github.everest-preview+json' \
         -H "Authorization: Bearer ${{ inputs.DOCKER_PAT }}" \
