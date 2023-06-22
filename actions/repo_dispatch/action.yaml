@@ -6,7 +6,9 @@ inputs:
     required: true
   DOCKER_PAT:
     required: true
-  cl_pl:
+  from_repo:
+    required: true
+  initial_repo:
     required: true
 
 runs:
@@ -17,7 +19,7 @@ runs:
         curl -X POST https://api.github.com/repos/NWChemEx-CI-test/${{inputs.to_repo}}/dispatches \
         -H 'Accept: application/vnd.github.everest-preview+json' \
         -H "Authorization: Bearer ${{ inputs.DOCKER_PAT }}" \
-        -d '{"event_type": "${{ inputs.type }}", "client_payload": "${{toJson(inputs.cl_pl)}}" }'
+                                                           -d '{"event_type": "${{ inputs.type }}", "client_payload": {"from_repo": "${{inputs.from_repo}}", "initial_repo": "${{inputs.initial_repo}}" } }'
       shell: bash
 
 # -d '{"event_type": "${from_repo}_release_update"}'
