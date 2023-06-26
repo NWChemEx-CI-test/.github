@@ -1,0 +1,43 @@
+name: release in master
+
+on:
+  workflow_call:
+    inputs:
+      repo:
+        required: true
+        type: string
+    secrets:
+      CMAIZE_GITHUB_TOKEN:
+        required: true
+        #CONTAINER_REPO_TOKEN:
+      DOCKER_PAT:
+        required: true
+
+jobs:
+  Repo_name_lowcase:
+    runs-on: ubuntu-latest
+    outputs:
+      lowcase_repo_name: ${{ steps.output-repo-name.outputs.repo_name }}
+    steps:
+    - name: Output repo name in lowcase
+      id: output-repo-name
+      run: |
+        name=${{ inputs.repo }}
+        echo "repo_name=${name,,}" >> "$GITHUB_OUTPUT"
+  Release:
+    runs-on: ubuntu-latest
+    needs: Repo_name_lowcase
+    steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          #password: ${{ secrets.CONTAINER_REPO_TOKEN }}
+          password: ${{ secrets.DOCKER_PAT }}
+      - name: tag the test images as stable to release
+        run: |
+          docker tag ghcr.io/nwchemex-ci-test/build_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test ghcr.io/nwchemex-ci-test/release_utilities:stable
+          docker push ghcr.io/nwchemex-ci-test/build_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:stable
+          docker tag ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test ghcr.io/nwchemex-ci-test/release_utilities:stable
+          docker push ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:stable

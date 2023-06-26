@@ -1,0 +1,27 @@
+name: Build building tool image
+on:
+  workflow_call:
+    inputs:
+      repo_name:
+        type: string
+        required: true
+
+jobs:
+  rebuild-build-image:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.DOCKER_PAT }}
+    - name: Build the docker image and push
+      run: |
+        filename=${{ inputs.repo_name }}
+        filename=${filename,,}
+        docker pull ghcr.io/NWChemEx-CI-test/build_${filename}:stable
+        docker build -t ghcr.io/NWChemEx-CI-test/build_${filename}:test --cache-from ghcr.io/NWChemEx-CI-test/build_${filename}:stable -f build.Dockerfile .
+        docker push ghcr.io/NWChemEx-CI-test/build_${filename}:test
