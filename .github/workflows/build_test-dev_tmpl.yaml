@@ -97,9 +97,9 @@ jobs:
         if: ${{inputs.gcc-build == true && inputs.install == true}}
         run: |
           cp -r /install ./
-          docker pull ghcr.io/NWChemEx-CI-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test
-          docker build -t ghcr.io/NWChemEx-CI-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test --cache-from ghcr.io/NWChemEx-CI-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test -f release.Dockerfile .
-          docker push ghcr.io/NWChemEx-CI-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test
+          docker pull ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test
+          docker build -t ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test --cache-from ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test -f release.Dockerfile .
+          docker push ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test
           #- name: Extract metadata (tags, labels) for Docker
           #  if: ${{inputs.gcc-build == true && inputs.install == true}}
           #  id: meta
