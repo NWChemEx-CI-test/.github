@@ -97,13 +97,13 @@ jobs:
         if: ${{inputs.gcc-build == true && inputs.install == true}}
         run: |
           cp -r /install ./
-          docker manifest inspect ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test > /dev/null ; image_exist=$?
-          if [ $image_exist == 0 ]; then
-             docker pull ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test
-             docker build -t ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test --cache-from ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test -f release.Dockerfile .
-          else
+          #docker manifest inspect ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test > /dev/null ; image_exist=$?
+          #if [ $image_exist == 0 ]; then
+          #   docker pull ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test
+          #   docker build -t ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test --cache-from ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test -f release.Dockerfile .
+          #else
              docker build -t ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test -f release.Dockerfile .
-          fi
+             #fi
           docker push ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test
           #- name: Extract metadata (tags, labels) for Docker
           #  if: ${{inputs.gcc-build == true && inputs.install == true}}
