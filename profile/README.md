@@ -1,4 +1,4 @@
-About the NWChemEx-Project
+About the NWChemEx-CI-test
 ==========================
 
-TODO: Fill out rest of `profile/README.md` in `.github` repo!!!
+This is an organization for testing CI workflows.
