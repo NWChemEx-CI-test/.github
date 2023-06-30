@@ -38,8 +38,8 @@ jobs:
       - name: tag the test images as stable to release
         run: |
           docker pull ghcr.io/nwchemex-ci-test/build_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test
-          docker tag ghcr.io/nwchemex-ci-test/build_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test ghcr.io/nwchemex-ci-test/:build_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}stable
+          docker tag ghcr.io/nwchemex-ci-test/build_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test ghcr.io/nwchemex-ci-test/build_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:stable
           docker push ghcr.io/nwchemex-ci-test/build_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:stable
           docker pull ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test
-          docker tag ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test ghcr.io/nwchemex-ci-test/release_:${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}stable
+          docker tag ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:stable
           docker push ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:stable
