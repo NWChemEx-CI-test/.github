@@ -13,7 +13,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
     - name: Login to GitHub Container Registry
-      uses: docker/login-action@v1
+      uses: docker/login-action@v2
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
@@ -22,6 +22,6 @@ jobs:
       run: |
         filename=${{ inputs.repo_name }}
         filename=${filename,,}
-        docker pull ghcr.io/NWChemEx-CI-test/build_${filename}:stable
-        docker build -t ghcr.io/NWChemEx-CI-test/build_${filename}:test --cache-from ghcr.io/NWChemEx-CI-test/build_${filename}:stable -f build.Dockerfile .
-        docker push ghcr.io/NWChemEx-CI-test/build_${filename}:test
+        docker pull ghcr.io/nwchemex-ci-test/build_${filename}:stable
+        docker build -t ghcr.io/nwchemex-ci-test/build_${filename}:test --cache-from ghcr.io/nwchemex-ci-test/build_${filename}:stable -f build.Dockerfile .
+        docker push ghcr.io/nwchemex-ci-test/build_${filename}:test
