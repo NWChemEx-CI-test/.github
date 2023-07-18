@@ -27,6 +27,9 @@ on:
       build_image_tag:
         required: true
         type: string
+      ref:
+        required: false
+        default: ${{ github.ref }}
     secrets:
       CMAIZE_GITHUB_TOKEN:
         required: true
