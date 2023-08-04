@@ -25,12 +25,13 @@ echo "set(BUILD_TESTING ON)" > "${toolchain_file}"
   echo "set(CATCH_ENABLE_COVERAGE ON)"
   #echo "set(CMAKE_PREFIX_PATH $(pwd)/install)"
   echo "set(CMAKE_PREFIX_PATH /install)"
+  # set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} /install)
   echo 'set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --coverage -std=c++17")'
   echo 'set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DOMPI_SKIP_MPICXX")'
   echo 'set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} --coverage")'
   echo 'set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fprofile-arcs")'
   echo 'set(CMAIZE_GITHUB_TOKEN '${CMAIZE_GITHUB_TOKEN}')'
-  echo 'set(CMAKE_BUILD_TYPE Debug)'
+  echo 'set(CMAKE_BUILD_TYPE Release)'
   echo 'set(ENABLE_SCALAPACK ON)'
   echo 'set(LIBDIR "/usr/lib/x86_64-linux-gnu")'
   echo 'set(BLAS_LIBRARIES   "-L${LIBDIR} -lopenblas")'
