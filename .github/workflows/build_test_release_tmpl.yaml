@@ -145,7 +145,7 @@ jobs:
         with: 
           CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
           integration_test: ${{ inputs.integration_test }}
-      - name: Build the release image and push
+      - name: Build the gcc release image and push
         if: ${{inputs.gcc-build == true && inputs.install == true}}
         run: |
           cp -r /install ./
