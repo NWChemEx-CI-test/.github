@@ -58,7 +58,7 @@ on:
       depend_repos:
         required: false
         type: string
-        default: ""
+        default: ''
     secrets:
       CMAIZE_GITHUB_TOKEN:
         required: true
@@ -94,7 +94,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.DOCKER_PAT }}
       - name: Add dependent repos gcc
-        if: ${{ inputs.depend_repos != "" && inputs.clang-build == false }}
+        if: ${{ inputs.depend_repos != '' && inputs.clang-build == false }}
         run: |
           IFS=" " read -r -a array <<< ${{inputs.depend_repos}}
           for element in "${array[@]}"
@@ -107,7 +107,7 @@ jobs:
             docker rm -v $img_id
           done
       - name: Add dependent repos clang
-        if: ${{ inputs.depend_repos != "" && inputs.clang-build == true }}
+        if: ${{ inputs.depend_repos != '' && inputs.clang-build == true }}
         run: |
           IFS=" " read -r -a array <<< ${{inputs.depend_repos}}
           for element in "${array[@]}"
