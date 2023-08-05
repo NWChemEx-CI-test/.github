@@ -45,7 +45,8 @@ echo "set(BUILD_TESTING ON)" > "${toolchain_file}"
 # otherwise set gcc as default
 # clang and gcc version controlled by defaults
 # or inputs
-if [  "${clang_build}" = true ]
+echo "gcc_version = " ${gcc_version}
+if [ "${clang_build}" == true ]
 then
     {
       echo "set(CMAKE_C_COMPILER /usr/bin/clang-${clang_version})"
@@ -60,15 +61,15 @@ else
 fi
 
 #Step 2: Configure
-if [ "${INSTALL}" = true ]; then
+if [ "${INSTALL}" == true ]; then
   export INSTALL_PATH=/install
-  if [ "${ninja_build}" = true ] ; then
+  if [ "${ninja_build}" == true ] ; then
     ${cmake_command} -GNinja -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}" -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH}
   else
     ${cmake_command} -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}" -DCMAKE_INSTALL_PREFIX=${INSTALL_PATH}
   fi
 else
-  if [ "${ninja_build}" = true ] ; then
+  if [ "${ninja_build}" == true ] ; then
     ${cmake_command} -GNinja -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}"
   else
     ${cmake_command} -H. -Bbuild -DCMAKE_TOOLCHAIN_FILE="${toolchain_file}"
@@ -79,6 +80,6 @@ fi
 ${cmake_command} --build build
 
 #Step 4: Install
-if [ "${INSTALL}" = true ]; then
+if [ "${INSTALL}" == true ]; then
   ${cmake_command} --build build --target install
 fi
