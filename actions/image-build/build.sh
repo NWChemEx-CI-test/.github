@@ -45,8 +45,8 @@ echo "set(BUILD_TESTING ON)" > "${toolchain_file}"
 # otherwise set gcc as default
 # clang and gcc version controlled by defaults
 # or inputs
-echo "clang-build = " ${clang-build}
-if [ "${clang-build}" = 'true' ]
+echo "use_clang = " ${use_clang}
+if [ ${use_clang} = true ]
 then
     {
       echo "set(CMAKE_C_COMPILER /usr/bin/clang-${clang_version})"
