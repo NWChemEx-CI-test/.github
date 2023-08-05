@@ -131,6 +131,7 @@ jobs:
           cmake_version: ${{ inputs.cmake_version }}
           clang_version: ${{ inputs.clang_version }}
           ninja_build: ${{ inputs.ninja_build }}
+          clang-build: ${{ inputs.clang-build }}
         uses: NWChemEx-CI-test/.github/actions/image-build@master
         with: 
           CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
@@ -141,6 +142,7 @@ jobs:
           cmake_version: ${{ inputs.cmake_version }}
           gcc_version: ${{ inputs.gcc_version }}
           ninja_build: ${{ inputs.ninja_build }}
+          clang-build: ${{ inputs.clang-build }}
         uses: NWChemEx-CI-test/.github/actions/image-build@master
         with: 
           CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}

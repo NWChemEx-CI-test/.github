@@ -45,7 +45,6 @@ echo "set(BUILD_TESTING ON)" > "${toolchain_file}"
 # otherwise set gcc as default
 # clang and gcc version controlled by defaults
 # or inputs
-echo "gcc_version = " ${gcc_version}
 if [ "${clang-build}" = true ]
 then
     {
