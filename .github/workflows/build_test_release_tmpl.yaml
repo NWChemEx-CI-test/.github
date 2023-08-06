@@ -77,6 +77,7 @@ jobs:
   build-test-release-gcc:
     runs-on: ubuntu-latest
     needs: Repo_name_lowcase
+    if: ${{inputs.gcc-build == true }}
     container:
       image: ghcr.io/nwchemex-ci-test/building-image:gcc-tmp
       credentials:
@@ -97,7 +98,6 @@ jobs:
         with:
           python-version: '3.x'
       - name: Build using GCC
-        if: ${{inputs.gcc-build == true}}
         env:
           cmake_version: ${{ inputs.cmake_version }}
           gcc_version: ${{ inputs.gcc_version }}
@@ -114,7 +114,7 @@ jobs:
           CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
           integration_test: ${{ inputs.integration_test }}
       - name: Build the gcc release image and push
-        if: ${{inputs.gcc-build == true && inputs.install == true}}
+        if: ${{ inputs.install == true }}
         run: |
           cp -r /install ./
           #docker manifest inspect ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test > /dev/null ; image_exist=$?
@@ -129,6 +129,7 @@ jobs:
   build-test-release-clang:
     runs-on: ubuntu-latest
     needs: Repo_name_lowcase
+    if: ${{inputs.clang-build == true}}
     container:
       image: ghcr.io/nwchemex-ci-test/building-image:clang-tmp
       credentials:
@@ -149,7 +150,6 @@ jobs:
         with:
           python-version: '3.x'
       - name: Build using Clang
-        if: ${{inputs.clang-build == true}}
         env:
           cmake_version: ${{ inputs.cmake_version }}
           clang_version: ${{ inputs.clang_version }}
@@ -166,7 +166,7 @@ jobs:
           CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
           integration_test: ${{ inputs.integration_test }}
       - name: Build the clang release image and push
-        if: ${{inputs.clang-build == true && inputs.install == true}}
+        if: ${{inputs.install == true}}
         run: |
           cp -r /install ./
           docker build -t ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:clang-latest -f release.Dockerfile .
