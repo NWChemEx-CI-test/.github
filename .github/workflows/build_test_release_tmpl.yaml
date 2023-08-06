@@ -27,10 +27,6 @@ on:
       base_image_tag:
         required: true
         type: string
-      depend_image_tag:
-        required: false
-        type: string
-        default: stable
       ref:
         required: false
         type: string
@@ -77,11 +73,12 @@ jobs:
       run: |
         name=${{ inputs.repo }}
         echo "repo_name=${name,,}" >> "$GITHUB_OUTPUT"
-  Build:
+
+  build-test-release-gcc:
     runs-on: ubuntu-latest
     needs: Repo_name_lowcase
     container:
-      image: ghcr.io/nwchemex-ci-test/base_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:${{inputs.base_image_tag}}
+      image: ghcr.io/nwchemex-ci-test/building-image:gcc-tmp
       credentials:
         username: ${{ github.actor }}
         #password: ${{ secrets.CONTAINER_REPO_TOKEN }}
@@ -93,51 +90,12 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.DOCKER_PAT }}
-      - name: Add dependent repos gcc
-        if: ${{ inputs.depend_repos != '' && inputs.clang-build == false }}
-        shell: bash
-        run: |
-          IFS=" " read -r -a array <<< "${{inputs.depend_repos}}"
-          for element in "${array[@]}"
-          do
-            element=${element,,}
-            drtag=${{ inputs.depend_image_tag }}
-            docker pull ghcr.io/nwchemex-ci-test/release_${element}:gcc-${drtag}
-            img_id=$(docker create ghcr.io/nwchemex-ci-test/release_${element}:gcc-${drtag})
-            docker cp $img_id:/install /install
-            docker rm -v $img_id
-          done
-      - name: Add dependent repos clang
-        if: ${{ inputs.depend_repos != '' && inputs.clang-build == true }}
-        shell: bash
-        run: |
-          IFS=" " read -r -a array <<< "${{inputs.depend_repos}}"
-          for element in "${array[@]}"
-          do
-            element=${element,,}
-            drtag=${{ inputs.depend_image_tag }}
-            docker pull ghcr.io/nwchemex-ci-test/release_${element}:clang-${drtag}
-            img_id=$(docker create ghcr.io/nwchemex-ci-test/release_${element}:clang-${drtag})
-            docker cp $img_id:/install /install
-            docker rm -v $img_id
-          done
       - uses: actions/checkout@v3
         with:
           ref: ${{ inputs.ref }}
       - uses: actions/setup-python@v1
         with:
           python-version: '3.x'
-      - name: Build using Clang
-        if: ${{inputs.clang-build == true}}
-        env:
-          cmake_version: ${{ inputs.cmake_version }}
-          clang_version: ${{ inputs.clang_version }}
-          ninja_build: ${{ inputs.ninja_build }}
-          use_clang: ${{ inputs.clang-build }}
-        uses: NWChemEx-CI-test/.github/actions/image-build@master
-        with: 
-          CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
-          INSTALL: ${{ inputs.install }}
       - name: Build using GCC
         if: ${{inputs.gcc-build == true}}
         env:
@@ -167,6 +125,46 @@ jobs:
              docker build -t ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:gcc-latest -f release.Dockerfile .
              #fi
           docker push ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:gcc-latest
+          
+  build-test-release-clang:
+    runs-on: ubuntu-latest
+    needs: Repo_name_lowcase
+    container:
+      image: ghcr.io/nwchemex-ci-test/building-image:clang-tmp
+      credentials:
+        username: ${{ github.actor }}
+        #password: ${{ secrets.CONTAINER_REPO_TOKEN }}
+        password: ${{ secrets.DOCKER_PAT }}
+    steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.DOCKER_PAT }}
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.ref }}
+      - uses: actions/setup-python@v1
+        with:
+          python-version: '3.x'
+      - name: Build using Clang
+        if: ${{inputs.clang-build == true}}
+        env:
+          cmake_version: ${{ inputs.cmake_version }}
+          clang_version: ${{ inputs.clang_version }}
+          ninja_build: ${{ inputs.ninja_build }}
+          use_clang: ${{ inputs.clang-build }}
+        uses: NWChemEx-CI-test/.github/actions/image-build@master
+        with: 
+          CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+          INSTALL: ${{ inputs.install }}
+      - name: Test Application
+        if: ${{inputs.test == true}}
+        uses: NWChemEx-CI-test/.github/actions/image-test@master
+        with: 
+          CMAIZE_GITHUB_TOKEN: ${{ secrets.CMAIZE_GITHUB_TOKEN }}
+          integration_test: ${{ inputs.integration_test }}
       - name: Build the clang release image and push
         if: ${{inputs.clang-build == true && inputs.install == true}}
         run: |
@@ -185,6 +183,7 @@ jobs:
           #  uses: docker/build-push-action@v4
           #  with:
           #    context: .
+          #    push: true
           #    push: true
           #    tags: ${{ steps.meta.outputs.tags }}
           #    labels: ${{ steps.meta.outputs.labels }}
