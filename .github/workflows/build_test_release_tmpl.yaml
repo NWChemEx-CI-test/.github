@@ -96,7 +96,7 @@ jobs:
       - name: Add dependent repos gcc
         if: ${{ inputs.depend_repos != '' && inputs.clang-build == false }}
         run: |
-          IFS=" " read -r -a array <<< ${{inputs.depend_repos}}
+          IFS=" " read -r -a array <<< "${{inputs.depend_repos}}"
           for element in "${array[@]}"
           do
             element=${element,,}
@@ -109,7 +109,7 @@ jobs:
       - name: Add dependent repos clang
         if: ${{ inputs.depend_repos != '' && inputs.clang-build == true }}
         run: |
-          IFS=" " read -r -a array <<< ${{inputs.depend_repos}}
+          IFS=" " read -r -a array <<< "${{inputs.depend_repos}}"
           for element in "${array[@]}"
           do
             element=${element,,}
