@@ -102,8 +102,8 @@ jobs:
           do
             element=${element,,}
             drtag=${{ inputs.depend_image_tag }}
-            docker pull ghcr.io/nwchemex-project/release_${element}:gcc-${drtag}
-            img_id=$(docker create ghcr.io/nwchemex-project/release_${element}:gcc-${drtag})
+            docker pull ghcr.io/nwchemex-ci-test/release_${element}:gcc-${drtag}
+            img_id=$(docker create ghcr.io/nwchemex-ci-test/release_${element}:gcc-${drtag})
             docker cp $img_id:/install /install
             docker rm -v $img_id
           done
@@ -116,8 +116,8 @@ jobs:
           do
             element=${element,,}
             drtag=${{ inputs.depend_image_tag }}
-            docker pull ghcr.io/nwchemex-project/release_${element}:clang-${drtag}
-            img_id=$(docker create ghcr.io/nwchemex-project/release_${element}:clang-${drtag})
+            docker pull ghcr.io/nwchemex-ci-test/release_${element}:clang-${drtag}
+            img_id=$(docker create ghcr.io/nwchemex-ci-test/release_${element}:clang-${drtag})
             docker cp $img_id:/install /install
             docker rm -v $img_id
           done
