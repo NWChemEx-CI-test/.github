@@ -24,9 +24,9 @@ on:
       install:
         required: true
         type: boolean
-      base_image_tag:
-        required: true
-        type: string
+        #base_image_tag:
+        #  required: true
+        #  type: string
       ref:
         required: false
         type: string
