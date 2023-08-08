@@ -17,6 +17,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: NWChemEx-CI-test/.github/.github/workflows/base_image_gcc.yaml@master
+        with:
+          gcc_version: ${{ inputs.gcc_version }}
       - name: Build image
         run: |
           docker load -i /tmp/base-gcc.tar
