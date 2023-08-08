@@ -2,7 +2,7 @@ name: Base image gcc
 
 on:
   workflow_call:
-  inputs:
+  with:
     ubuntu_version:
       type: string
       required: false

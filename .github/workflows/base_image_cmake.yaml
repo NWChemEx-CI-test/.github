@@ -1,17 +1,16 @@
 name: Base image cmake
 
 on:
-  #workflow_call:
   workflow_dispatch:
-  inputs:
-    cmake_version:
-      type: string
-      required: false
-      default: 3.17.0
-    gcc_version:
-      type: string
-      required: false
-      default: 9
+    inputs:
+      cmake_version:
+        type: string
+        required: false
+        default: 3.17.0
+      gcc_version:
+        type: string
+        required: false
+        default: 9
 
 jobs:
   image-with-gcc:
