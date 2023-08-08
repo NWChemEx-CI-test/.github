@@ -1,0 +1,23 @@
+name: Base image gcc
+
+on:
+  workflow_call:
+  inputs:
+    ubuntu_version:
+      type: string
+      required: false
+      default: 20.04
+    gcc_version:
+      type: string
+      required: false
+      default: 9
+
+jobs:
+  image-with-gcc:
+    runs-on: ubuntu:latest
+    steps:
+      #- uses: actions/checkout@v3
+      - name: Build image
+        run: |
+          docker build -t base-gcc:latest -f Dockerfile/base-gcc.Dockerfile . --build-arg GCC_VERSION=${{inputs.gcc_version}} --build-arg UBUNTU_VERSION=${{inputs.ubuntu_version}}
+          docker save -o /tmp/base-gcc.tar base-gcc:latest
