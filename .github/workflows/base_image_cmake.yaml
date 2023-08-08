@@ -20,5 +20,5 @@ jobs:
       - name: Build image
         run: |
           docker load -i /tmp/base-gcc.tar
-          docker build -t base-cmake:latest -f Dockerfile/base-cmake.Dockerfile . --build-arg GCC_VERSION=${{inputs.gcc_version}} --build-arg CMAKE_VERSION=${{cmake.ubuntu_version}}
+          docker build -t base-cmake:latest -f Dockerfile/base-cmake.Dockerfile . --build-arg GCC_VERSION=${{inputs.gcc_version}} --build-arg CMAKE_VERSION=${{inputs.cmake_version}}
           docker save -o /tmp/base-cmake.tar base-cmake:latest
