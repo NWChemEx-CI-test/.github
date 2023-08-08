@@ -1,7 +1,7 @@
-name: Base image gcc
+name: Base image cmake
 
 on:
-  workflow_call:
+  #workflow_call:
   workflow_dispatch:
   inputs:
     cmake_version:
