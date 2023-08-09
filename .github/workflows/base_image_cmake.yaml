@@ -17,11 +17,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: NWChemEx-CI-test/.github/.github/workflows/base_image_gcc.yaml@master
+      - uses: NWChemEx-CI-test/.github/actions/base_image_gcc@master
         with:
           gcc_version: ${{ inputs.gcc_version }}
       - name: Build image
         run: |
-          docker load -i /tmp/base-gcc.tar
+          #docker load -i /tmp/base-gcc.tar
           docker build -t base-cmake:latest -f Dockerfile/base-cmake.Dockerfile . --build-arg GCC_VERSION=${{inputs.gcc_version}} --build-arg CMAKE_VERSION=${{inputs.cmake_version}}
-          docker save -o /tmp/base-cmake.tar base-cmake:latest
+          #docker save -o /tmp/base-cmake.tar base-cmake:latest

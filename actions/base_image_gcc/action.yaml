@@ -1,0 +1,20 @@
+name: Build base image with gcc
+inputs:
+  gcc_version:
+    required: true
+  ubuntu_version:
+    required: false
+    default: 20.04
+
+runs:
+  using: "composite"
+  steps:
+    - name: Give Permission
+      run: chmod +x ${GITHUB_ACTION_PATH}/base_image_gcc.sh 
+      shell: bash 
+    - name: Build Application
+      env:
+        gcc_version: ${{ inputs.gcc_version }}
+        ubuntu_version: ${{ inputs.ubuntu_version }}
+      run: ${GITHUB_ACTION_PATH}/base_image_gcc.sh
+      shell: bash
