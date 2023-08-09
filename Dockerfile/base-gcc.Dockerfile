@@ -12,6 +12,7 @@ RUN    apt-get update \
                 gcc-${GCC_VERSION} \
                 g++-${GCC_VERSION} \
                 ninja-build \
+		build-essential \
                 libxml2-dev \
                 libxslt-dev \
                 python3-dev \
