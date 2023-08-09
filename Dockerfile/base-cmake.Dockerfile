@@ -1,7 +1,6 @@
-ARG CMAKE_VERSION
-
 FROM base-gcc:latest
 
+ARG CMAKE_VERSION
 # Install cmake
 RUN wget https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-Linux-x86_64.sh \
       -q -O /tmp/cmake-install.sh \
