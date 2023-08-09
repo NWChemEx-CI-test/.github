@@ -1,7 +1,8 @@
-ARG GCC_VERSION
 ARG UBUNTU_VERSION
 
 FROM ubuntu:${UBUNTU_VERSION}
+
+ARG GCC_VERSION
 
 # Install basic tools
 RUN    apt-get update \
@@ -14,7 +15,7 @@ RUN    apt-get update \
                 ninja-build \
                 libxml2-dev \
                 libxslt-dev \
-                python3.8-dev \
+                python3-dev \
                 docker.io \
         && apt-get clean \
         && pip install gcovr \
