@@ -1,7 +1,7 @@
 ARG GCC_VERSION
 ARG UBUNTU_VERSION
 
-FROM ubuntu:${UBUNTU_VERSION
+FROM ubuntu:${UBUNTU_VERSION}
 
 # Install basic tools
 RUN    apt-get update \
