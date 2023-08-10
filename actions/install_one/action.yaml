@@ -8,6 +8,10 @@ inputs:
     type: string
     required: false
     default: 9
+  clang_version:
+    type: string
+    required: false
+    default: 11
   ubuntu_version:
     type: string
     required: false
@@ -44,6 +48,7 @@ runs:
     - name: Build Application
       env:
         gcc_version: ${{ inputs.gcc_version }}
+        clang_version: ${{ inputs.clang_version }}
         ubuntu_version: ${{ inputs.ubuntu_version }}
         cmake_version: ${{ inputs.cmake_version }}
         madness_version: ${{ inputs.madness_version }}
