@@ -18,7 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        repository: NWChemEx-CI-test/.github
+        with:
+          repository: NWChemEx-CI-test/.github
       - uses: NWChemEx-CI-test/.github/actions/base_image_gcc@master
         with:
           gcc_version: ${{ inputs.gcc_version }}
