@@ -31,7 +31,7 @@ inputs:
   package_name:
     type: string
     required: required
-  parent_package_name:
+  parent_image_name:
     type: string
     required: required
 
@@ -51,6 +51,6 @@ runs:
         spdlog_version: ${{ inputs.spdlog_version }}
         cereal_version: ${{ inputs.cereal_version }}
         package_name: ${{ inputs.package_name }}
-        parent_package_name: ${{ inputs.parent_package_name }}
+        parent_image_name: ${{ inputs.parent_image_name }}
       run: ${GITHUB_ACTION_PATH}/install_one.sh
       shell: bash
