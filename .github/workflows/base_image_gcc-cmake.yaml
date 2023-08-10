@@ -1,20 +1,17 @@
 name: Base image gcc cmake
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       cmake_version:
         type: string
-        required: false
-        default: 3.17.0
+        required: true
       gcc_version:
         type: string
-        required: false
-        default: 9
+        required: true
       ubuntu_version:
         type: string
-        required: false
-        default: 20.04
+        required: true
 
 jobs:
   image-with-cmake:
