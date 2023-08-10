@@ -18,5 +18,5 @@ runs:
   steps:
     - name: push image
       run: |
-        docker tag ${{inputs.tmp_image_name}}:${{tmp_image_tag}} ${{inputs.image_name}}:${{image_tag}}
-        docker push ${{inputs.image_name}}:${{image_tag}}
+        docker tag ${{inputs.tmp_image_name}}:${{inputs.tmp_image_tag}} ${{inputs.image_name}}:${{inputs.image_tag}}
+        docker push ${{inputs.image_name}}:${{inputs.image_tag}}
