@@ -26,7 +26,7 @@ jobs:
           ubuntu_version: ${{ inputs.ubuntu_version }}
       - name: Build image
         run: |
-          docker build -t ghcr.io/nwchemex-ci-test/base-gcc-cmake:latest -f Dockerfile/base-cmake.Dockerfile . --build-arg GCC_VERSION=${{inputs.gcc_version}} --build-arg CMAKE_VERSION=${{inputs.cmake_version}}
+          docker build -t ghcr.io/nwchemex-ci-test/base-cmake:latest -f Dockerfile/base-cmake.Dockerfile . --build-arg GCC_VERSION=${{inputs.gcc_version}} --build-arg CMAKE_VERSION=${{inputs.cmake_version}}
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v2
         with:
@@ -35,4 +35,4 @@ jobs:
           password: ${{ secrets.DOCKER_PAT }}
       - name: Push the image
         run: |
-          docker push ghcr.io/nwchemex-ci-test/base-gcc-cmake:latest
+          docker push ghcr.io/nwchemex-ci-test/base-cmake:latest
