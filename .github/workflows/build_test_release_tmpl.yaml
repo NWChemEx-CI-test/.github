@@ -122,7 +122,7 @@ jobs:
           #   docker pull ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test
           #   docker build -t ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test --cache-from ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:test -f release.Dockerfile .
           #else
-             docker build -t ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:gcc-latest -f release.Dockerfile .
+             docker build -t ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:gcc-latest -f Dockerfile/release.Dockerfile .
              #fi
           docker push ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:gcc-latest
           
@@ -169,7 +169,7 @@ jobs:
         if: ${{inputs.install == true}}
         run: |
           cp -r /install ./
-          docker build -t ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:clang-latest -f release.Dockerfile .
+          docker build -t ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:clang-latest -f Dockerfile/release.Dockerfile .
           docker push ghcr.io/nwchemex-ci-test/release_${{needs.Repo_name_lowcase.outputs.lowcase_repo_name}}:clang-latest
           #- name: Extract metadata (tags, labels) for Docker
           #  if: ${{inputs.gcc-build == true && inputs.install == true}}
