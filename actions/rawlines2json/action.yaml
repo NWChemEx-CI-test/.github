@@ -1,0 +1,17 @@
+name: Convert raw lines into json
+inputs:
+  infile_path:
+    type: string
+    required: false
+    default: rawLines.tmp
+  outfile_path:
+    type: string
+    required: false
+    default: outfile_path
+
+runs:
+  using: "composite"
+  steps:
+    - name: Run python script
+      run: python ${GITHUB_ACTION_PATH}/rawlines2json.py ${{inputs.infile_path}} ${{inputs.outfile_path}}
+      shell: bash
