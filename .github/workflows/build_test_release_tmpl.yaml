@@ -92,7 +92,7 @@ jobs:
         with:
           python-version: '3.x'
       - name: Build using GCC in a container
-        uses: NWChemEx-CI-test/${{inputs.repo}}/actions/container-build@master
+        uses: ./actions/container-build
         with: 
           btag: ${{ inputs.base_image_tag }}
           token: ${{ secrets.DOCKER_PAT }}
@@ -140,7 +140,7 @@ jobs:
         with:
           python-version: '3.x'
       - name: Build using CLANG in a container
-        uses: NWChemEx-CI-test/${{inputs.repo}}/actions/container-build@master
+        uses: ./actions/container-build
         with:
           btag: ${{ inputs.base_image_tag }}
           token: ${{ secrets.DOCKER_PAT }}
